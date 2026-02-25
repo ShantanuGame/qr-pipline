@@ -20,7 +20,7 @@ export default function ViewPage() {
 
   useEffect(() => {
     getBatch(id)
-      .then(res => setBatch(res.data))
+      .then(res => setBatch(res.data.batch))
       .catch(() => setError('Batch record not found.'))
       .finally(() => setLoading(false))
   }, [id])
