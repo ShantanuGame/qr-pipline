@@ -72,7 +72,7 @@ def create_batch(payload: BatchCreate):
     }
     result = batches_collection.insert_one(doc)
     inserted_id = str(result.inserted_id)
-    view_url = f"{FRONTEND_URL}/view/{inserted_id}"
+    view_url = f"{FRONTEND_URL}/#/view/{inserted_id}"
     qr_data_url = generate_qr_base64(view_url)
     doc["_id"] = inserted_id
     doc["created_at"] = doc["created_at"].isoformat()
