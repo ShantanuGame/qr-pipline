@@ -14,41 +14,43 @@ function fmtFull(iso) {
 
 export default function ViewPage() {
   const { id } = useParams()
-  const [batch, setBatch]   = useState(null)
+  const [batch, setBatch] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError]   = useState('')
+  const [error, setError] = useState('')
 
   useEffect(() => {
-  getBatch(id)
-    .then(res => {
-      console.log('API response:', res)
-      console.log('res.data:', res.data)
-      setBatch(res.data)
-    })
-    .catch((err) => {
-      console.log('Error:', err)
-      setError('Batch record not found.')
-    })
-    .finally(() => setLoading(false))
-}, [id])
-  if (loading || !batch) return <div className="loading-text">Loading batch data…</div>
+    getBatch(id)
+      .then(res => {
+        console.log('API response:', res)
+        console.log('res.data:', res.data)
+        setBatch(res.data)
+      })
+      .catch((err) => {
+        console.log('Error:', err)
+        setError('Batch record not found.')
+      })
+      .finally(() => setLoading(false))
+  }, [id])
+
+  if (loading) return <div className="loading-text">Loading batch data...</div>
 
   if (error) return (
     <div className="page">
-      <div className="error-bar">⚠ {error}</div>
-      <Link to="/" className="back-link" style={{ marginTop: '1rem' }}>← Back to home</Link>
+      <div className="error-bar">Warning: {error}</div>
+      <Link to="/" className="back-link" style={{ marginTop: '1rem' }}>Back to home</Link>
     </div>
   )
 
-  // Re-generate QR on client to show it on the view page too
+  if (!batch) return <div className="loading-text">No batch data found.</div>
+
   const viewUrl = window.location.href
 
   return (
     <div className="page" style={{ maxWidth: 720 }}>
-      <Link to="/history" className="back-link">← Back to History</Link>
+      <Link to="/history" className="back-link">Back to History</Link>
 
       <div className="page-title">Batch Record</div>
-      <div className="page-sub">Scanned from QR code — full production details below.</div>
+      <div className="page-sub">Scanned from QR code - full production details below.</div>
 
       <div className="card">
         <div className="card-title">// production parameters</div>
@@ -81,7 +83,6 @@ export default function ViewPage() {
             </div>
           </div>
 
-          {/* QR placeholder — shows URL */}
           <div className="view-qr" style={{ textAlign: 'center' }}>
             <div style={{
               width: 130,
@@ -98,7 +99,7 @@ export default function ViewPage() {
               padding: '0.5rem',
               textAlign: 'center',
             }}>
-              QR already<br/>scanned ✓
+              QR already scanned
             </div>
             <div style={{ marginTop: '0.5rem', fontSize: '0.65rem', color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>
               ID: {batch._id.slice(-8)}
