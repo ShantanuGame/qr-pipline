@@ -19,13 +19,19 @@ export default function ViewPage() {
   const [error, setError]   = useState('')
 
   useEffect(() => {
-    getBatch(id)
-      .then(res => setBatch(res.data.batch))
-      .catch(() => setError('Batch record not found.'))
-      .finally(() => setLoading(false))
-  }, [id])
-
-  if (loading) return <div className="loading-text">Loading batch data…</div>
+  getBatch(id)
+    .then(res => {
+      console.log('API response:', res)
+      console.log('res.data:', res.data)
+      setBatch(res.data)
+    })
+    .catch((err) => {
+      console.log('Error:', err)
+      setError('Batch record not found.')
+    })
+    .finally(() => setLoading(false))
+}, [id])
+  if (loading || !batch) return <div className="loading-text">Loading batch data…</div>
 
   if (error) return (
     <div className="page">
