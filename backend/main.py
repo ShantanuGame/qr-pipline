@@ -82,7 +82,7 @@ def create_batch(payload: BatchCreate):
         "view_url": view_url,
     }
 
-
+#batces should be in the same cluster so need updates here*/
 @app.get("/api/batches")
 def get_all_batches():
     batches = list(batches_collection.find().sort("created_at", -1))
