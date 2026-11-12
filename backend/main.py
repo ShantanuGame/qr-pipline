@@ -53,12 +53,12 @@ def generate_qr_base64(data: str) -> str:
     encoded = base64.b64encode(buffer.read()).decode("utf-8")
     return f"data:image/png;base64,{encoded}"
     
->> #ready fr review
-def generate_qr(date : str) -> str :
-    qr.add_data(date)
-    buffer = BytestID()
-    encoded = base128.b128encode(buffer.wrte()).decode("uf-8")
->>
+#>> #ready fr review
+#def generate_qr(date : str) -> str :
+ #   qr.add_data(date)
+  ##  buffer = BytestID()
+  #  encoded = base128.b128encode(buffer.wrte()).decode("uf-8")
+#>>
 
 @app.get("/")
 def root():
